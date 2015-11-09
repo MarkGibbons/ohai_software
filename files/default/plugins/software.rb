@@ -35,7 +35,7 @@ Ohai.plugin(:Software) do
   def vas_version
     return unless vastool
     vtout = shell_out("#{vastool} -v").stdout
-    md = vtout.match(/Version\s+(?<version>[\d\.]+)/)
+    md = vtout.match(/Version\s+(?<version>[.\d]+)/)
     md ? md[:version] : nil
   end
 
@@ -47,7 +47,7 @@ Ohai.plugin(:Software) do
   def vmware_version
     return unless vmware
     vmout = shell_out("#{vmware} -v").stdout
-    md = vmout.match(/^(?<version>[\d\.]+)\s+/)
+    md = vmout.match(/^(?<version>[.\d]+)\s+/)
     md ? md[:version] : nil
   end
 
@@ -60,7 +60,6 @@ Ohai.plugin(:Software) do
 
   def vxfs_version
     os = collect_os
-    puts "OS #{os}"
     case os.to_s
     when 'solaris2'
       vxfs_version_solaris2
@@ -71,13 +70,13 @@ Ohai.plugin(:Software) do
 
   def vxfs_version_solaris2
     modout = shell_out('modinfo').stdout
-    md = modout.match(/^\w+\s+\w+\s+\w+\s+\w+\s+\w+\s+vxfs\s+\(VxFS\s+(?<version>[\.\w]+)/)
+    md = modout.match(/^.+?vxfs\s+\(VxFS\s+(?<version>[.\w]+)/)
     md ? md[:version] : nil
   end
 
   def vxfs_version_linux
     modout = shell_out('modinfo vxfs').stdout
-    md = modout.match(/^\s+version:\s+(?<version>[\.\w]+)$/)
+    md = modout.match(/^\s*version:\s+(?<version>[.\w]+)$/)
     md ? md[:version] : nil
   end
 
