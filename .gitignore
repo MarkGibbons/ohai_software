@@ -1,0 +1,12 @@
+*#
+*.un~
+*~
+.#*
+.*.sw[az]
+.bundle/*
+.kitchen.local.yml
+.kitchen/
+.vagrant
+Berksfile.lock
+\#*#
+bin/*

@@ -1,0 +1,31 @@
+---
+driver:
+  name: vagrant
+driver_config:
+  http_proxy: http://webproxysea.nordstrom.net:8181
+  https_proxy: http://webproxysea.nordstrom.net:8181
+  require_chef_omnibus: false
+
+provisioner:
+  name: chef_zero
+  client_rb:
+    "Ohai::Config[:plugin_path] << '/etc/chef/ohai_plugins' #":
+
+platforms:
+  - name: software_sol10
+    driver:
+      box: nordsol10
+      box_url: http://y0319p297/downloads/vagrant-solaris10.box
+      require_chef_omnibus: 12.4.1
+  - name: software_sol11
+    driver:
+      box: nordsol11
+      box_url: http://y0319p297/downloads/vagrant-solaris11.box
+      require_chef_omnibus: 12.4.1
+
+suites:
+  - name: default
+    run_list:
+      - recipe[ohai::default]
+      - recipe[test_software::default]
+      - recipe[kitchen_aide::solaris_busser]

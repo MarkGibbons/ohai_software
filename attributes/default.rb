@@ -1,4 +1,4 @@
-# 
+#
 # Cookbook Name:: COOKBOOK_NAME
 # Attributes:: default
 #
