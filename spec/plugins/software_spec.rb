@@ -145,13 +145,13 @@ def vmware_version
   OpenStruct.new(stdout:
     '8.6.11.26309 (build-1310128)
 '
-                )
+  )
 end
 
 def vxfs_version_none
   OpenStruct.new(stdout:
-  '
-'  
+    '
+'
   )
 end
 
@@ -198,7 +198,7 @@ def vxfs_version_linux
     parm:           vxfs_io_proxy_time:If an IO has been waiting on an IO queue for this number of clock ticks, then create a new IO hand-off thread (int)
     parm:           vxfs_io_proxy_max:Maximum number of threads per IO handoff queue (int)
 '
-                )
+  )
 end
 
 def vas_version
@@ -207,5 +207,5 @@ def vas_version
 Copyright 2014 Quest Software, Inc.  ALL RIGHTS RESERVED.
 Protected by U.S. Patent Nos. 7,617,501, 7,895,332, 7,904,949, 8,086,710, 8,087,075, 8,245,242. Patents pending.
 '
-                )
+  )
 end

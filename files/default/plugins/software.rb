@@ -11,7 +11,7 @@ Ohai.plugin(:Software) do
   provides 'software'
 
   def packages
-    { 
+    {
       # consider adding license info
       # upgrade needed?
       vas: { version: :vas_version, installed: :vas_installed },
@@ -60,13 +60,12 @@ Ohai.plugin(:Software) do
 
   def vxfs_version
     os = collect_os
+    puts "OS #{os}"
     case os.to_s
     when 'solaris2'
       vxfs_version_solaris2
     when 'linux'
       vxfs_version_linux
-    else
-      nil
     end
   end
 
@@ -85,9 +84,9 @@ Ohai.plugin(:Software) do
   collect_data(:default) do
     software = Mash.new unless software
     packages.each do |pkg_name, info_types|
-      software[pkg_name] = Mash.new 
+      software[pkg_name] = Mash.new
       info_types.each do |type, info_method|
-        software[pkg_name][type] =  self.send(info_method)
+        software[pkg_name][type] =  send(info_method)
       end
     end
     software software

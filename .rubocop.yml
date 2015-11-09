@@ -29,3 +29,6 @@ Style/TrailingBlankLines:
 Metrics/LineLength:
   Exclude:
     - '**/Gemfile'
+
+Metrics/LineLength:
+  Max: 156

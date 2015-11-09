@@ -1,2 +1,2 @@
-name 'test_software'
+name    'test_software'
 depends 'ohai_software'
