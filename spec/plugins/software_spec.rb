@@ -13,49 +13,40 @@ require 'spec_helper'
 describe Ohai::System, 'Software plugin - solaris happy path' do
   before(:each) do
     @plugin = get_plugin('software.rb')
-    puts 'Check the software.rb plugin for errors. Loading failed' unless @plugin
     allow(@plugin).to receive(:collect_os).and_return(:solaris2)
-    allow(@plugin).to receive(:shell_out).and_return(OpenStruct.new(stdout: 'not stubbed'))
-    allow(@plugin).to receive(:shell_out).with('/opt/quest/bin/vastool -v').and_return(vas_version)
-    allow(@plugin).to receive(:shell_out).with('/usr/bin/vmware-toolbox-cmd -v').and_return(vmware_version)
-    allow(@plugin).to receive(:shell_out).with('modinfo').and_return(vxfs_version_solaris)
-    allow(File).to receive(:executable?).and_call_original
-    allow(File).to receive(:executable?).with('/opt/quest/bin/vastool').and_return(true)
-    allow(File).to receive(:executable?).with('/usr/bin/vmware-toolbox-cmd').and_return(true)
-    allow(File).to receive(:executable?).with('/usr/ccs/bin/vmware-toolbox-cmd').and_return(true)
-    allow(File).to receive(:executable?).with('/usr/sbin/vxprint').and_return(true)
+    std_stubs
     @plugin.run
   end
 
-  it 'Run successfully' do
+  it 'Runs successfully' do
     expect { @plugin }.to_not raise_error
   end
 
-  it 'Return a Mash' do
+  it 'Returns a Mash' do
     expect @plugin.to be_a_kind_of(Mash)
   end
 
-  it 'vas version' do
+  it 'should return the vas version' do
     expect(@plugin[:software][:vas][:version]).to eq '4.1.0.21267'
   end
 
-  it 'vmware version' do
+  it 'should return the vmware version' do
     expect(@plugin[:software][:vmware][:version]).to eq '8.6.11.26309'
   end
 
-  it 'vxfs version' do
+  it 'should return the vxfs version' do
     expect(@plugin[:software][:vxfs][:version]).to eq '5.1SP1RP4'
   end
 
-  it 'vas installed' do
+  it 'vas should be installed' do
     expect(@plugin[:software][:vas][:installed]).to eq true
   end
 
-  it 'vmware installed' do
+  it 'vmware should be installed' do
     expect(@plugin[:software][:vmware][:installed]).to eq true
   end
 
-  it 'vxfs installed' do
+  it 'vxfs should be installed' do
     expect(@plugin[:software][:vxfs][:installed]).to eq true
   end
 end
@@ -63,14 +54,9 @@ end
 describe Ohai::System, 'Software plugin - no version programs found' do
   before(:each) do
     @plugin = get_plugin('software.rb')
-    puts 'Check the software.rb plugin for errors. Loading failed' unless @plugin
     allow(@plugin).to receive(:collect_os).and_return(:linux)
-    allow(@plugin).to receive(:shell_out).and_return(OpenStruct.new(stdout: 'not stubbed'))
-    allow(@plugin).to receive(:shell_out).with('/opt/quest/bin/vastool -v').and_return(vas_version)
-    allow(@plugin).to receive(:shell_out).with('vmware-toolbox-cmd -v').and_return(vmware_version)
-    allow(@plugin).to receive(:shell_out).with('modinfo').and_return(vxfs_version_none)
+    std_stubs
     allow(@plugin).to receive(:shell_out).with('modinfo vxfs').and_return(vxfs_version_none)
-    allow(File).to receive(:executable?).and_call_original
     allow(File).to receive(:executable?).with('/opt/quest/bin/vastool').and_return(false)
     allow(File).to receive(:executable?).with('/usr/bin/vmware-toolbox-cmd').and_return(false)
     allow(File).to receive(:executable?).with('/usr/ccs/bin/vmware-toolbox-cmd').and_return(false)
@@ -78,35 +64,35 @@ describe Ohai::System, 'Software plugin - no version programs found' do
     @plugin.run
   end
 
-  it 'Run successfully' do
+  it 'Runs successfully' do
     expect { @plugin }.to_not raise_error
   end
 
-  it 'Return a Mash' do
+  it 'Returns a Mash' do
     expect @plugin.to be_a_kind_of(Mash)
   end
 
-  it 'vas version' do
+  it 'should not find a vas version' do
     expect(@plugin[:software][:vas][:version]).to eq nil
   end
 
-  it 'vmware version' do
+  it 'should not find a vmware version' do
     expect(@plugin[:software][:vmware][:version]).to eq nil
   end
 
-  it 'vxfs version' do
+  it 'should not find a vxfs version' do
     expect(@plugin[:software][:vxfs][:version]).to eq nil
   end
 
-  it 'vas not installed' do
+  it 'vas should not be installed' do
     expect(@plugin[:software][:vas][:installed]).to eq false
   end
 
-  it 'vmware not installed' do
+  it 'vmware should not be installed' do
     expect(@plugin[:software][:vmware][:installed]).to eq false
   end
 
-  it 'vxfs not installed' do
+  it 'vxfs should not be installed' do
     expect(@plugin[:software][:vxfs][:installed]).to eq false
   end
 end
@@ -114,31 +100,36 @@ end
 describe Ohai::System, 'Software plugin - linux' do
   before(:each) do
     @plugin = get_plugin('software.rb')
-    puts 'Check the software.rb plugin for errors. Loading failed' unless @plugin
     allow(@plugin).to receive(:collect_os).and_return(:linux)
+    std_stubs
+    @plugin.run
+  end
+
+  it 'Runs successfully' do
+    expect { @plugin }.to_not raise_error
+  end
+
+  it 'should return the vmware version' do
+    expect(@plugin[:software][:vmware][:version]).to eq '8.6.11.26309'
+  end
+
+  it 'should return the vxfs version' do
+    expect(@plugin[:software][:vxfs][:version]).to eq '5.0.30.00'
+  end
+end
+
+def std_stubs
+    puts 'Check the software.rb plugin for errors. Loading failed' unless @plugin
     allow(@plugin).to receive(:shell_out).and_return(OpenStruct.new(stdout: 'not stubbed'))
     allow(@plugin).to receive(:shell_out).with('/opt/quest/bin/vastool -v').and_return(vas_version)
     allow(@plugin).to receive(:shell_out).with('/usr/bin/vmware-toolbox-cmd -v').and_return(vmware_version)
     allow(@plugin).to receive(:shell_out).with('modinfo').and_return(vxfs_version_solaris)
     allow(@plugin).to receive(:shell_out).with('modinfo vxfs').and_return(vxfs_version_linux)
+    allow(File).to receive(:executable?).and_call_original
     allow(File).to receive(:executable?).with('/opt/quest/bin/vastool').and_return(true)
     allow(File).to receive(:executable?).with('/usr/bin/vmware-toolbox-cmd').and_return(true)
-    allow(File).to receive(:executable?).with('/usr/ccs/bin/vmware-toolbox-cmd').and_return(false)
+    allow(File).to receive(:executable?).with('/usr/ccs/bin/vmware-toolbox-cmd').and_return(true)
     allow(File).to receive(:executable?).with('/usr/sbin/vxprint').and_return(true)
-    @plugin.run
-  end
-
-  it 'Run successfully' do
-    expect { @plugin }.to_not raise_error
-  end
-
-  it 'vmware version' do
-    expect(@plugin[:software][:vmware][:version]).to eq '8.6.11.26309'
-  end
-
-  it 'vxfs version' do
-    expect(@plugin[:software][:vxfs][:version]).to eq '5.0.30.00'
-  end
 end
 
 def vmware_version
