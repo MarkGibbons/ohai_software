@@ -119,17 +119,17 @@ describe Ohai::System, 'Software plugin - linux' do
 end
 
 def std_stubs
-    puts 'Check the software.rb plugin for errors. Loading failed' unless @plugin
-    allow(@plugin).to receive(:shell_out).and_return(OpenStruct.new(stdout: 'not stubbed'))
-    allow(@plugin).to receive(:shell_out).with('/opt/quest/bin/vastool -v').and_return(vas_version)
-    allow(@plugin).to receive(:shell_out).with('/usr/bin/vmware-toolbox-cmd -v').and_return(vmware_version)
-    allow(@plugin).to receive(:shell_out).with('modinfo').and_return(vxfs_version_solaris)
-    allow(@plugin).to receive(:shell_out).with('modinfo vxfs').and_return(vxfs_version_linux)
-    allow(File).to receive(:executable?).and_call_original
-    allow(File).to receive(:executable?).with('/opt/quest/bin/vastool').and_return(true)
-    allow(File).to receive(:executable?).with('/usr/bin/vmware-toolbox-cmd').and_return(true)
-    allow(File).to receive(:executable?).with('/usr/ccs/bin/vmware-toolbox-cmd').and_return(true)
-    allow(File).to receive(:executable?).with('/usr/sbin/vxprint').and_return(true)
+  puts 'Check the software.rb plugin for errors. Loading failed' unless @plugin
+  allow(@plugin).to receive(:shell_out).and_return(OpenStruct.new(stdout: 'not stubbed'))
+  allow(@plugin).to receive(:shell_out).with('/opt/quest/bin/vastool -v').and_return(vas_version)
+  allow(@plugin).to receive(:shell_out).with('/usr/bin/vmware-toolbox-cmd -v').and_return(vmware_version)
+  allow(@plugin).to receive(:shell_out).with('modinfo').and_return(vxfs_version_solaris)
+  allow(@plugin).to receive(:shell_out).with('modinfo vxfs').and_return(vxfs_version_linux)
+  allow(File).to receive(:executable?).and_call_original
+  allow(File).to receive(:executable?).with('/opt/quest/bin/vastool').and_return(true)
+  allow(File).to receive(:executable?).with('/usr/bin/vmware-toolbox-cmd').and_return(true)
+  allow(File).to receive(:executable?).with('/usr/ccs/bin/vmware-toolbox-cmd').and_return(true)
+  allow(File).to receive(:executable?).with('/usr/sbin/vxprint').and_return(true)
 end
 
 def vmware_version
