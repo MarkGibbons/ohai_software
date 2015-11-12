@@ -32,3 +32,12 @@ Metrics/LineLength:
 
 Metrics/LineLength:
   Max: 156
+
+Metrics/AbcSize:
+  Max: 55
+
+Metrics/MethodLength:
+  Max: 31
+
+Style/ClosingParenthesisIndentation:
+  Enabled: false
