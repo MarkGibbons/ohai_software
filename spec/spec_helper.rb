@@ -3,7 +3,7 @@
 #
 # Copyright 2015, Nordstrom, Inc.
 #
-# All rights reserved - Do Not Redistribute
+# Apache2 license as specified in the License file.
 #
 
 RSpec.configure do |config|

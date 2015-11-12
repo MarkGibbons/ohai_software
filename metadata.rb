@@ -1,7 +1,7 @@
 name             'ohai_software'
 maintainer       'Nordstrom, Inc.'
 maintainer_email 'itunixadminall@nordstrom.com'
-license          'All rights reserved'
+license          'Apache2 license as specified in the License file.'
 description      'Installs the ohai_software plugin'
 version          '1.0.1'
 depends          'ohai'
