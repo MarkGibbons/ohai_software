@@ -23,3 +23,5 @@ Ohai Attributes Set by Plugins
 *  software[:<pkg>][:installed] Check to see if the package is installed
 *  software[:<pkg>][:version] Gather the package version. Returns nil if unable
    to get a version.
+
+The upgrade_available attribute is set for vmware.
