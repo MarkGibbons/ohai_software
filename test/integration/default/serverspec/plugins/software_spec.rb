@@ -27,6 +27,10 @@ describe 'software plugin' do
     expect(software['vmware']['version']).to eql(nil)
   end
 
+  it 'vmware upgrade available should be nil'do
+    expect(software['vmware']['upgrade_available']).to eql(nil)
+  end
+
   it 'vxfs should not be installed'do
     expect(software['vxfs']['installed']).to eql(false)
   end

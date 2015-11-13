@@ -12,10 +12,9 @@ Ohai.plugin(:Software) do
 
   def packages
     {
-      # consider adding license info
-      # upgrade needed?
+      # TODO: consider extracting license info
       vas: { version: :vas_version, installed: :vas_installed },
-      vmware: { version: :vmware_version, installed: :vmware_installed },
+      vmware: { version: :vmware_version, installed: :vmware_installed, upgrade_available: :vmware_chk_upgrade },
       vxfs: { version: :vxfs_version, installed: :vxfs_installed }
     }
   end
@@ -42,6 +41,13 @@ Ohai.plugin(:Software) do
   def vastool
     pgm = '/opt/quest/bin/vastool'
     ::File.executable?(pgm) ? pgm : false
+  end
+
+  def vmware_chk_upgrade
+    return unless vmware
+    vmout = shell_out("#{vmware} upgrade status").stdout
+    md = vmout.match(/(?<available>available)/)
+    md ? true : false
   end
 
   def vmware_version

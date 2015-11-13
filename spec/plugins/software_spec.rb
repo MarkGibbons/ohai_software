@@ -113,6 +113,10 @@ describe Ohai::System, 'Software plugin - linux' do
     expect(@plugin[:software][:vmware][:version]).to eq '8.6.11.26309'
   end
 
+  it 'should check for an available upgrade' do
+    expect(@plugin[:software][:vmware][:upgrade_available]).to eq true
+  end
+
   it 'should return the vxfs version' do
     expect(@plugin[:software][:vxfs][:version]).to eq '5.0.30.00'
   end
@@ -123,6 +127,7 @@ def std_stubs
   allow(@plugin).to receive(:shell_out).and_return(OpenStruct.new(stdout: 'not stubbed'))
   allow(@plugin).to receive(:shell_out).with('/opt/quest/bin/vastool -v').and_return(vas_version)
   allow(@plugin).to receive(:shell_out).with('/usr/bin/vmware-toolbox-cmd -v').and_return(vmware_version)
+  allow(@plugin).to receive(:shell_out).with('/usr/bin/vmware-toolbox-cmd upgrade status').and_return(vmware_upgrade)
   allow(@plugin).to receive(:shell_out).with('modinfo').and_return(vxfs_version_solaris)
   allow(@plugin).to receive(:shell_out).with('modinfo vxfs').and_return(vxfs_version_linux)
   allow(File).to receive(:executable?).and_call_original
@@ -135,6 +140,13 @@ end
 def vmware_version
   OpenStruct.new(stdout:
     '8.6.11.26309 (build-1310128)
+'
+  )
+end
+
+def vmware_upgrade
+  OpenStruct.new(stdout:
+    'A new version of VMware Tools is available.
 '
   )
 end

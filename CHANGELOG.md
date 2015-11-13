@@ -1,5 +1,8 @@
 # Revision History for ohai_software
 
+## 1.0.2
+* Check for an available vmware upgrade
+
 ## 1.0.1
 * Refactor tests to eliminate duplicate stubs
 
