@@ -26,6 +26,14 @@ describe Ohai::System, 'Software plugin - solaris happy path' do
     expect @plugin.to be_a_kind_of(Mash)
   end
 
+  it 'Returns a Mash for the second level' do
+    expect(@plugin[:software]).to be_a_kind_of(Mash)
+  end
+
+  it 'Returns a Mash for the third level' do
+    expect(@plugin[:software][:vas]).to be_a_kind_of(Mash)
+  end
+
   it 'should return the vas version' do
     expect(@plugin[:software][:vas][:version]).to eq '4.1.0.21267'
   end

@@ -1,5 +1,8 @@
 # Revision History for ohai_software
 
+## 1.0.3
+* Add a few more tests
+
 ## 1.0.2
 * Check for an available vmware upgrade
 
