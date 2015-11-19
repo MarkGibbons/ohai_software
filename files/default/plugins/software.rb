@@ -87,13 +87,12 @@ Ohai.plugin(:Software) do
   end
 
   collect_data(:default) do
-    software = Mash.new unless software
+    software Mash.new unless software
     packages.each do |pkg_name, info_types|
       software[pkg_name] = Mash.new
       info_types.each do |type, info_method|
         software[pkg_name][type] =  send(info_method)
       end
     end
-    software software
   end
 end

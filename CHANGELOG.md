@@ -1,5 +1,8 @@
 # Revision History for ohai_software
 
+## 1.0.4
+* Refactor the Mash creation
+
 ## 1.0.3
 * Add a few more tests
 
